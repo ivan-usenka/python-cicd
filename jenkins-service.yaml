@@ -1,0 +1,27 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jenkins-ui
+spec:
+  type: NodePort
+  selector:
+    app: jenkins
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 31500
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jenkins-discovery
+spec:
+  selector:
+    app: jenkins
+  ports:
+    - protocol: TCP
+      port: 50000
+      targetPort: 50000
+      name: agents
