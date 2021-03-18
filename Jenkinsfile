@@ -3,8 +3,13 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'python --version'
+                sh 'python3 -m build'
             }
         }
+        stage('upload-to-nexus') {
+                    steps {
+                        sh 'twine upload dist/* -r nexus --config-file /Users/ivan_usenka/Epam\ Work/Fedex/python-cicd/.pypirc'
+                    }
+                }
     }
 }
