@@ -3,12 +3,17 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'python3 -m build'
+                withPythonEnv('python3') {
+                    sh 'python3 -m pip install --upgrade build twine'
+                    sh 'python3 -m build'
+                }
             }
         }
         stage('upload-to-nexus') {
                     steps {
-                        sh 'twine upload dist/* -r nexus --config-file /Users/ivan_usenka/Epam_Work/Fedex/python-cicd/.pypirc'
+                        withPythonEnv('python3') {
+                            sh 'twine upload dist/* -r nexus --config-file /Users/ivan_usenka/Epam_Work/Fedex/python-cicd/.pypirc'
+                        }
                     }
                 }
     }
