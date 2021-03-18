@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'python3 -m pip install --upgrade build'
+                sh 'python3 -m pip install twine'
                 sh 'python3 -m build'
             }
         }
