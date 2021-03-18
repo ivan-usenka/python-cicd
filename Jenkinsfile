@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    environment {
+        GOOGLE_APPLICATION_CREDENTIALS = credentials("googlesa")
+    }
+
     stages {
         stage('build') {
             steps {
@@ -19,7 +23,6 @@ pipeline {
             }
         }
         stage('stage-template') {
-
             steps {
                 withPythonEnv('python3') {
                     sh 'python -m src.pipeline.beam --runner DataflowRunner --project or2-msq-fdxg-fact-t1iylu --region europe-west3 --staging_location gs://dataflow_cicd_test/staging --temp_location gs://dataflow_cicd_test/temp --template_location gs://dataflow_cicd_test/templates/test_beam'
