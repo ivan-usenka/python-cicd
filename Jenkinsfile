@@ -32,7 +32,7 @@ pipeline {
         stage('upload-DAG') {
             steps {
                 withPythonEnv('python3') {
-                    sh 'gcloud'
+                    sh 'gsutil src/dag/test-dag.py cp gs://europe-west3-composer-pytho-c11ac81b-bucket/dag-test/'
                 }
             }
         }
