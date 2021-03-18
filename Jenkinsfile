@@ -29,6 +29,13 @@ pipeline {
                 }
             }
         }
+        stage('upload-DAG') {
+            steps {
+                withPythonEnv('python3') {
+                    sh 'gcloud'
+                }
+            }
+        }
         stage('upload-to-nexus') {
             steps {
                 withPythonEnv('python3') {
