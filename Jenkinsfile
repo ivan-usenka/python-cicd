@@ -4,11 +4,18 @@ pipeline {
         stage('build') {
             steps {
                 withPythonEnv('python3') {
-                    sh 'python3 -m pip install --upgrade build twine'
+                    sh 'python3 -m pip install --upgrade build twine pytest'
                     sh 'python3 -m build'
                 }
             }
         }
+        stage('tests') {
+                    steps {
+                        withPythonEnv('python3') {
+                            sh 'pytest'
+                        }
+                    }
+                }
         stage('upload-to-nexus') {
                     steps {
                         withPythonEnv('python3') {
