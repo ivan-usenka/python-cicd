@@ -8,7 +8,7 @@ pipeline {
         }
         stage('upload-to-nexus') {
                     steps {
-                        sh 'twine upload dist/* -r nexus --config-file /Users/ivan_usenka/Epam\ Work/Fedex/python-cicd/.pypirc'
+                        sh 'twine upload dist/* -r nexus --config-file /Users/ivan_usenka/Epam Work/Fedex/python-cicd/.pypirc'
                     }
                 }
     }
