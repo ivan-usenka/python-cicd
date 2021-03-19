@@ -10,7 +10,7 @@ def dataflow_template_staging_command = "python -m src.pipeline.beam " +
 
 def airflow_dag_source_location = "src/dag/test-dag.py"
 
-def airflow_dag_target_bucket = "gs://europe-west3-composer-pytho-c11ac81b-bucket/dag-test/"
+def airflow_dag_target_bucket = "gs://test_dag_upload/"
 
 def pypirc_path = "/Users/ivan_usenka/Epam_Work/Fedex/python-cicd/.pypirc"
 
