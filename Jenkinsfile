@@ -14,6 +14,8 @@ def airflow_dag_target_bucket = "gs://test_dag_upload/"
 
 def pypirc_path = "/Users/ivan_usenka/Epam_Work/Fedex/python-cicd/.pypirc"
 
+def python_env_name = "python3"
+
 pipeline {
 
     agent any
@@ -25,7 +27,7 @@ pipeline {
     stages {
         stage('Build Package') {
             steps {
-                withPythonEnv('python3') {
+                withPythonEnv('${python_env_name}') {
                     sh 'python3 -m pip install --upgrade build ${packages_to_install}'
                     sh 'python3 -m build'
                 }
@@ -33,7 +35,7 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                withPythonEnv('python3') {
+                withPythonEnv('${python_env_name}') {
                     sh 'pytest'
                 }
             }
@@ -50,21 +52,21 @@ pipeline {
         }
         stage('Stage Dataflow Template') {
             steps {
-                withPythonEnv('python3') {
+                withPythonEnv('${python_env_name}') {
                     sh "${dataflow_template_staging_command}"
                 }
             }
         }
         stage('Upload Airflow DAG') {
             steps {
-                withPythonEnv('python3') {
+                withPythonEnv('${python_env_name}') {
                     sh 'gsutil cp ${airflow_dag_source_location} ${airflow_dag_target_bucket}'
                 }
             }
         }
         stage('Upload Artifact To Nexus') {
             steps {
-                withPythonEnv('python3') {
+                withPythonEnv('${python_env_name}') {
                     sh 'twine upload dist/* -r nexus --config-file ${pypirc_path}'
                 }
             }
