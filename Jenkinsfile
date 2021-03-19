@@ -22,6 +22,12 @@ pipeline {
                 }
             }
         }
+        stage('SonarQube analysis') {
+            def scannerHome = tool 'SonarScanner 4.0';
+            withSonarQubeEnv('sonar') {
+                sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
         stage('stage-template') {
             steps {
                 withPythonEnv('python3') {
