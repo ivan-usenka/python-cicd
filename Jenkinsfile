@@ -23,10 +23,15 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            def scannerHome = tool 'SonarScanner 4.0';
-            withSonarQubeEnv('sonar') {
-                sh "${scannerHome}/bin/sonar-scanner"
-            }
+           steps {
+                   script {
+                     // requires SonarQube Scanner 2.8+
+                     scannerHome = tool 'SonarQube Scanner 4.6.0'
+                   }
+                   withSonarQubeEnv('SonarQube Scanner') {
+                     sh "${scannerHome}/bin/sonar-scanner"
+                   }
+                 }
         }
         stage('stage-template') {
             steps {
