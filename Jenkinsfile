@@ -59,14 +59,14 @@ pipeline {
         stage('Upload Airflow DAG') {
             steps {
                 withPythonEnv('python3') {
-                    sh 'gsutil cp ${airflow_dag_source_location} ${airflow_dag_target_bucket}'
+                    sh "gsutil cp ${airflow_dag_source_location} ${airflow_dag_target_bucket}"
                 }
             }
         }
         stage('Upload Artifact To Nexus') {
             steps {
                 withPythonEnv('python3') {
-                    sh 'twine upload dist/* -r nexus --config-file ${pypirc_path}'
+                    sh "twine upload dist/* -r nexus --config-file ${pypirc_path}"
                 }
             }
         }
