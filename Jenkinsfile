@@ -1,3 +1,11 @@
+def staging_command = "python -m src.pipeline.beam " +
+                        "--runner DataflowRunner " +
+                        "--project or2-msq-fdxg-fact-t1iylu " +
+                        "--region europe-west3 " +
+                        "--staging_location gs://dataflow_cicd_test/staging " +
+                        "--temp_location gs://dataflow_cicd_test/temp " +
+                        "--template_location gs://dataflow_cicd_test/templates/test_beam"
+
 pipeline {
 
     agent any
@@ -5,14 +13,6 @@ pipeline {
     environment {
         GOOGLE_APPLICATION_CREDENTIALS = credentials("googlesa")
     }
-
-    def staging_command = "python -m src.pipeline.beam " +
-                            "--runner DataflowRunner " +
-                            "--project or2-msq-fdxg-fact-t1iylu " +
-                            "--region europe-west3 " +
-                            "--staging_location gs://dataflow_cicd_test/staging " +
-                            "--temp_location gs://dataflow_cicd_test/temp " +
-                            "--template_location gs://dataflow_cicd_test/templates/test_beam"
 
     stages {
         stage('Build Package') {
