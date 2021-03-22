@@ -12,6 +12,12 @@ def airflow_dag_source_location = "src/dag/test-dag.py"
 
 def airflow_dag_target_bucket = "gs://europe-west3-composer-pytho-c11ac81b-bucket/dags/"
 
+def composer_add_dag_command = "gcloud composer environments storage dags import " +
+                                    "--environment python-cicd" +
+                                    "--location europe-west3 " +
+                                    "--source /Users/ivan_usenka/Epam_Work/Fedex/python-cicd/src/dag/test-dag.py" +
+                                    "--project or2-msq-fdxg-fact-t1iylu"
+
 def pypirc_path = "/Users/ivan_usenka/Epam_Work/Fedex/python-cicd/.pypirc"
 
 def python_env = "python3"
@@ -63,7 +69,8 @@ pipeline {
         stage('Upload Airflow DAG') {
             steps {
                 withPythonEnv("${python_env}") {
-                    sh "gsutil cp ${airflow_dag_source_location} ${airflow_dag_target_bucket}"
+                    // sh "gsutil cp ${airflow_dag_source_location} ${airflow_dag_target_bucket}"
+                    sh "${composer_add_dag_command}"
                 }
             }
         }
